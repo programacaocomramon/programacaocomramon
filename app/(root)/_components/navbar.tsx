@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
-import logo from "@/public/logo.png";
-import { Poppins } from "next/font/google";
 import Link from "next/link";
+import { Poppins } from "next/font/google";
+import { useAuth, UserButton } from "@clerk/nextjs";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@clerk/nextjs";
+import logo from "@/public/logo.png";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -41,7 +41,7 @@ export const Navbar = () => {
         </div>
       </Link>
 
-      {!userId && (
+      {!userId ? (
         <div className="gap-2 hidden md:flex">
           <Link href="/sign-in">
             <Button variant="default">Entrar</Button>
@@ -50,6 +50,10 @@ export const Navbar = () => {
             <Button variant="secondary">Criar conta</Button>
           </Link>
         </div>
+      ) : (
+        <span className="hidden md:inline">
+          <UserButton />
+        </span>
       )}
 
       <Sheet>
